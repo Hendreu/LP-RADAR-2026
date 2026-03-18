@@ -92,16 +92,37 @@ const MotionSection = ({ children, className, style, id }: { children: React.Rea
 );
 
 const LogoMarquee = () => {
-  const doubled = [...logos, ...logos];
+  const half = Math.ceil(logos.length / 2);
+  const row1 = logos.slice(0, half);
+  const row2 = logos.slice(half);
+  const doubled1 = [...row1, ...row1];
+  const doubled2 = [...row2, ...row2];
+
   return (
-    <div className="overflow-hidden py-8">
-      <div className="flex animate-marquee gap-12 items-center w-max">
-        {doubled.map((logo, i) => (
+    <div
+      className="overflow-hidden py-6 space-y-5"
+      style={{
+        maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+      }}
+    >
+      <div className="flex animate-marquee items-center w-max">
+        {doubled1.map((logo, i) => (
           <img
             key={i}
             src={logo.src}
             alt={logo.alt}
-            className="h-10 md:h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
+            className="h-16 md:h-[4.6rem] w-auto object-contain transition-all duration-300 opacity-90 hover:opacity-100 mr-16"
+          />
+        ))}
+      </div>
+      <div className="flex animate-marquee-reverse items-center w-max">
+        {doubled2.map((logo, i) => (
+          <img
+            key={i}
+            src={logo.src}
+            alt={logo.alt}
+            className="h-16 md:h-[4.6rem] w-auto object-contain transition-all duration-300 opacity-90 hover:opacity-100 mr-16"
           />
         ))}
       </div>
@@ -233,7 +254,7 @@ const RadarDaNuvem = () => {
             variants={fadeUp}
             className="mt-6 text-purple-200/60 text-sm"
           >
-            2.000+ dados sobre custos de nuvem de empresas brasileiras
+            3.000+ dados sobre custos de nuvem de empresas brasileiras
           </motion.div>
 
           <motion.div
@@ -263,28 +284,52 @@ const RadarDaNuvem = () => {
       </section>
 
       {/* Logo Carousel */}
-      <MotionSection className="py-12 px-6 bg-white border-b border-border">
-        <div className="container mx-auto max-w-5xl">
-          <motion.p variants={fadeUp} className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-            Empresas como a sua já vêem os benchmarks
-          </motion.p>
+      <MotionSection className="py-14 px-6 bg-white border-b border-border">
+        <div className="container mx-auto max-w-[74rem]">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="text-center mb-10"
+          >
+            <div className="inline-flex items-center gap-5">
+              <div className="h-px w-20 bg-border" />
+              <p className="text-lg md:text-xl font-bold text-foreground tracking-tight">
+                Empresas como a sua já vêem os benchmarks
+              </p>
+              <div className="h-px w-20 bg-border" />
+            </div>
+          </motion.div>
           <LogoMarquee />
         </div>
       </MotionSection>
 
       {/* O que tem dentro do Radar */}
-      <MotionSection id="o-que-recebe" className="py-24 px-6 bg-gradient-to-b from-[hsl(270_60%_12%)] to-[hsl(270_55%_16%)]">
-        <div className="container mx-auto max-w-5xl">
-          <motion.div variants={fadeUp} className="text-center mb-16">
+      <MotionSection id="o-que-recebe" className="py-28 px-6 bg-gradient-to-b from-[hsl(270_60%_12%)] to-[hsl(270_55%_16%)]">
+        <div className="container mx-auto max-w-[74rem]">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="text-center mb-16"
+          >
             <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
               O que tem dentro do <span className="text-purple-300">Radar?</span>
             </h2>
-            <p className="text-purple-200/70 text-lg max-w-2xl mx-auto">
+            <p className="text-purple-100 text-lg max-w-2xl mx-auto">
               Achados relevantes dos custos de nuvem das empresas brasileiras
             </p>
           </motion.div>
 
-          <motion.div variants={stagger} className="grid md:grid-cols-3 gap-8">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid md:grid-cols-3 gap-10"
+          >
             {[
               {
                 icon: AlertTriangle,
@@ -307,18 +352,24 @@ const RadarDaNuvem = () => {
                 variants={scaleIn}
                 whileHover={{ scale: 1.03, y: -4 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 text-center border border-purple-500/20 hover:border-purple-400/40 transition-colors"
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-10 text-center border border-purple-400/30 hover:border-purple-400/60 transition-colors"
               >
-                <stat.icon className="w-8 h-8 text-purple-300 mx-auto mb-4" />
-                <div className="font-display text-5xl font-bold text-white mb-2">
+                <stat.icon className="w-10 h-10 text-purple-300 mx-auto mb-5" />
+                <div className="font-display text-6xl font-bold text-white mb-3">
                   {stat.value}
                 </div>
-                <p className="text-purple-200/70 text-sm">{stat.label}</p>
+                <p className="text-purple-100 text-base">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
 
-          <motion.div variants={fadeUp} className="text-center mt-12">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="text-center mt-12"
+          >
             <a
               href="https://pesquisa.radardanuvem.com.br/"
               target="_blank"
@@ -333,9 +384,9 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* Stats numbers */}
-      <MotionSection className="py-20 px-6 bg-background">
-        <div className="container mx-auto max-w-5xl">
-          <motion.div variants={fadeUp} className="text-center mb-4">
+      <MotionSection className="py-28 px-6 bg-background">
+        <div className="container mx-auto max-w-[74rem]">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-4">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
               Destaques do <span className="text-brand-purple">Radar 2025</span>
             </h2>
@@ -344,7 +395,7 @@ const RadarDaNuvem = () => {
             </p>
           </motion.div>
 
-          <motion.div variants={stagger} className="grid md:grid-cols-3 gap-8 mt-12">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-3 gap-10 mt-12">
             {[
               { icon: Database, value: "3.000+", label: "pontos de dados" },
               { icon: Users, value: "130+", label: "empresas participantes" },
@@ -354,13 +405,13 @@ const RadarDaNuvem = () => {
                 key={stat.label}
                 variants={scaleIn}
                 whileHover={{ scale: 1.03 }}
-                className="bg-card rounded-2xl p-8 text-center border border-border hover:border-brand-purple/30 transition-colors"
+                className="bg-card rounded-2xl p-10 text-center border border-border hover:border-brand-purple/30 transition-colors"
               >
-                <stat.icon className="w-8 h-8 text-brand-purple mx-auto mb-4" />
-                <div className="font-display text-4xl font-bold text-foreground">
+                <stat.icon className="w-10 h-10 text-brand-purple mx-auto mb-5" />
+                <div className="font-display text-5xl font-bold text-foreground">
                   {stat.value}
                 </div>
-                <p className="mt-2 text-muted-foreground">{stat.label}</p>
+                <p className="mt-3 text-muted-foreground text-base">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -368,29 +419,29 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* Apoiadores */}
-      <MotionSection className="py-16 px-6 bg-muted/30">
-        <div className="container mx-auto max-w-4xl text-center">
-          <p className="text-xl font-bold text-brand-purple mb-6">
+      <MotionSection className="py-20 px-6 bg-gradient-to-b from-[hsl(270_55%_16%)] to-[hsl(270_50%_20%)]">
+        <div className="container mx-auto max-w-[64rem] text-center">
+          <p className="text-xl font-bold text-white mb-8">
             Obrigado aos nossos apoiadores
           </p>
-          <div className="flex items-center justify-center gap-8">
-            <img src="/confraria.png" alt="Confraria" className="h-12 w-auto" />
-            <span className="text-xl text-muted-foreground">|</span>
-            <img src="/magalucloud.png" alt="MagaluCloud" className="h-12 w-auto" />
+          <div className="flex items-center justify-center gap-10">
+            <img src="/confraria.png" alt="Confraria" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
+            <span className="text-2xl text-purple-400">|</span>
+            <img src="/magalucloud.png" alt="MagaluCloud" className="h-14 w-auto opacity-90 hover:opacity-100 transition-opacity" />
           </div>
         </div>
       </MotionSection>
 
       {/* Para quem é */}
-      <MotionSection id="para-quem" className="py-24 px-6 bg-background">
-        <div className="container mx-auto max-w-5xl">
-          <motion.div variants={fadeUp} className="text-center mb-16">
+      <MotionSection id="para-quem" className="py-28 px-6 bg-background">
+        <div className="container mx-auto max-w-[74rem]">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
               Para quem é o Radar?
             </h2>
           </motion.div>
 
-          <motion.div variants={stagger} className="grid md:grid-cols-3 gap-8">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-3 gap-10">
             {[
               {
                 icon: Briefcase,
@@ -430,24 +481,24 @@ const RadarDaNuvem = () => {
                 key={persona.title}
                 variants={fadeUp}
                 whileHover={{ y: -4 }}
-                className="bg-card rounded-2xl p-8 border border-border hover:border-brand-purple/30 transition-colors"
+                className="bg-card rounded-2xl p-10 border border-border hover:border-brand-purple/30 transition-colors"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center">
-                    <persona.icon className="w-5 h-5 text-brand-purple" />
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center">
+                    <persona.icon className="w-6 h-6 text-brand-purple" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-foreground">
+                    <h3 className="font-display text-xl font-bold text-foreground">
                       {persona.title}
                     </h3>
-                    <span className="text-xs text-muted-foreground">{persona.subtitle}</span>
+                    <span className="text-sm text-muted-foreground">{persona.subtitle}</span>
                   </div>
                 </div>
-                <p className="font-semibold text-foreground mb-4">{persona.headline}</p>
-                <ul className="space-y-2">
+                <p className="font-semibold text-foreground mb-5 text-[1.05rem]">{persona.headline}</p>
+                <ul className="space-y-3">
                   {persona.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-brand-purple mt-0.5 shrink-0" />
+                    <li key={point} className="flex items-start gap-2 text-base text-muted-foreground">
+                      <CheckCircle2 className="w-5 h-5 text-brand-purple mt-0.5 shrink-0" />
                       {point}
                     </li>
                   ))}
@@ -456,7 +507,7 @@ const RadarDaNuvem = () => {
             ))}
           </motion.div>
 
-          <motion.div variants={fadeUp} className="text-center mt-12">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mt-12">
             <Button
               size="lg"
               onClick={scrollToForm}
@@ -470,27 +521,27 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* O que você recebe */}
-      <MotionSection className="py-24 px-6 bg-gradient-to-b from-[hsl(270_55%_14%)] to-[hsl(270_50%_18%)]">
-        <div className="container mx-auto max-w-3xl text-center">
-          <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl font-bold text-white mb-8">
+      <MotionSection className="py-28 px-6 bg-gradient-to-b from-[hsl(270_55%_14%)] to-[hsl(270_50%_18%)]">
+        <div className="container mx-auto max-w-[55rem] text-center">
+          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="font-display text-3xl md:text-5xl font-bold text-white mb-8">
             O que você recebe
           </motion.h2>
-          <motion.p variants={fadeUp} custom={0.1} className="text-purple-200/70 text-lg mb-10">
+          <motion.p variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.1} className="text-purple-100 text-lg mb-12">
             Ao preencher o formulário, você recebe:
           </motion.p>
-          <motion.div variants={stagger} className="flex flex-col gap-4 text-left max-w-md mx-auto">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="flex flex-col gap-5 text-left max-w-xl mx-auto">
             {[
               "Acesso ao Report Radar da Nuvem 2025",
               "Resumo executivo (perfeito para compartilhar internamente)",
               "Convite para conteúdos do Blog da Nuvem e eventos (online e presenciais)",
             ].map((item) => (
-              <motion.div key={item} variants={fadeUp} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-purple-300 mt-0.5 shrink-0" />
-                <span className="text-purple-100">{item}</span>
+              <motion.div key={item} variants={fadeUp} className="flex items-start gap-4">
+                <CheckCircle2 className="w-6 h-6 text-purple-300 mt-0.5 shrink-0" />
+                <span className="text-purple-100 text-lg">{item}</span>
               </motion.div>
             ))}
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-10">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mt-12">
             <Button
               size="lg"
               onClick={scrollToForm}
@@ -504,8 +555,8 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* Formulário */}
-      <MotionSection className="py-24 px-6 bg-background">
-        <div className="container mx-auto max-w-lg">
+      <MotionSection className="py-28 px-6 bg-background">
+        <div className="container mx-auto max-w-[37rem]">
           <motion.div
             variants={rollDown}
             initial="hidden"
@@ -608,12 +659,12 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* FAQ */}
-      <MotionSection id="faq" className="py-24 px-6 bg-muted/20">
-        <div className="container mx-auto max-w-2xl">
-          <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
+      <MotionSection id="faq" className="py-28 px-6 bg-muted/20">
+        <div className="container mx-auto max-w-[48rem]">
+          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
             Perguntas frequentes
           </motion.h2>
-          <motion.div variants={stagger}>
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <Accordion type="single" collapsible className="space-y-2">
               {[
                 { q: "Que tipos de empresas têm dados no Radar da Nuvem?", a: "Empresas que utilizam infraestrutura de nuvens públicas (Google Cloud Platform, AWS, Microsoft Azure, Oracle, Magalu Cloud, Hetzner e afins) de todos os portes." },
@@ -634,8 +685,8 @@ const RadarDaNuvem = () => {
       </MotionSection>
 
       {/* CTA Final */}
-      <section className="py-24 px-6 bg-gradient-to-br from-[hsl(270_60%_12%)] via-[hsl(270_55%_18%)] to-[hsl(270_50%_22%)]">
-        <div className="container mx-auto max-w-3xl text-center">
+      <section className="py-28 px-6 bg-gradient-to-br from-[hsl(270_60%_12%)] via-[hsl(270_55%_18%)] to-[hsl(270_50%_22%)]">
+        <div className="container mx-auto max-w-[55rem] text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
             Quer comparar sua cloud com o mercado e{" "}
             <span className="text-purple-300">reduzir desperdícios</span> com método?
