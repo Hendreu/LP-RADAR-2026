@@ -117,17 +117,17 @@ const LogoMarquee = () => {
             key={i}
             src={logo.src}
             alt={logo.alt}
-            className="h-20 md:h-24 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-8 md:mr-14"
+            className="h-24 md:h-28 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-5 md:mr-10"
           />
         ))}
       </div>
-      <div className="flex animate-marquee-reverse items-center w-max">
+      <div className="flex animate-marquee-reverse items-center w-max" style={{ animationDelay: "-32s" }}>
         {doubled2.map((logo, i) => (
           <img
             key={i}
             src={logo.src}
             alt={logo.alt}
-            className="h-20 md:h-24 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-8 md:mr-14"
+            className="h-24 md:h-28 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-5 md:mr-10"
           />
         ))}
       </div>
@@ -137,7 +137,7 @@ const LogoMarquee = () => {
             key={i}
             src={logo.src}
             alt={logo.alt}
-            className="h-20 md:h-24 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-8 md:mr-14"
+            className="h-24 md:h-28 w-auto object-contain transition-all duration-300 opacity-80 hover:opacity-100 mr-5 md:mr-10"
           />
         ))}
       </div>
